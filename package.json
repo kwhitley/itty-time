@@ -1,16 +1,16 @@
 {
-  "name": "itty-fetcher",
-  "version": "0.7.3",
-  "description": "Tiny wrapper around native fetch to remove boilerplate from your own API fetching code.",
+  "name": "itty-time",
+  "version": "0.0.0",
+  "description": "An itty library to handle common time-related things for your API.",
   "sourceType": "module",
-  "main": "./dist/itty-fetcher.js",
-  "module": "./dist/itty-fetcher.mjs",
-  "types": "./dist/itty-fetcher.d.ts",
+  "main": "./itty-time.js",
+  "module": "./itty-time.mjs",
+  "types": "./itty-time.d.ts",
   "exports": {
     ".": {
-      "require": "./dist/itty-fetcher.js",
-      "import": "./dist/itty-fetcher.mjs",
-      "types": "./dist/itty-fetcher.d.ts"
+      "require": "./itty-time.js",
+      "import": "./itty-time.mjs",
+      "types": "./itty-time.d.ts"
     }
   },
   "scripts": {
@@ -25,9 +25,9 @@
     "format": "prettier src --write src",
     "prerelease": "yarn verify",
     "prebuild": "rimraf dist && mkdir dist",
-    "build": "tsup src/itty-fetcher.ts --format cjs,esm --minify --dts --clean",
+    "build": "tsup src/itty-time.ts --format cjs,esm --minify --dts --clean",
     "prepublishOnly": "yarn build",
-    "release": "release --tag --push --patch"
+    "release": "release --tag --push --src=dist --patch"
   },
   "keywords": [
     "fetch",
@@ -38,12 +38,12 @@
   ],
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/kwhitley/itty-fetcher.git"
+    "url": "git+https://github.com/kwhitley/itty-time.git"
   },
   "author": "Kevin R. Whitley <krwhitley@gmail.com>",
   "license": "MIT",
   "bugs": {
-    "url": "https://github.com/kwhitley/itty-fetcher/issues"
+    "url": "https://github.com/kwhitley/itty-time/issues"
   },
   "devDependencies": {
     "@typescript-eslint/eslint-plugin": "^5.36.2",
@@ -52,10 +52,8 @@
     "coveralls": "^3.1.1",
     "esbuild": "^0.15.7",
     "eslint": "^8.23.0",
-    "fetch-mock": "^9.11.0",
     "fs-extra": "^10.1.0",
-    "jsdom": "20.0.1",
-    "node-fetch": "2.6.7",
+    "jsdom": "^20.0.1",
     "npm-run-all": "4.1.5",
     "onchange": "7.1.0",
     "prettier": "^2.7.1",
