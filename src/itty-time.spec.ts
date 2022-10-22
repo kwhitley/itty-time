@@ -60,6 +60,7 @@ describe('itty-time', () => {
       ['5 seconds', 5],
       ['1 minutes', 60],
       ['24 hour', 60 * 60 * 24],
+      ['1 day, 4 hours, and 36 minutes', 60 * 60 * 24 + 60 * 60 * 4 + 60 * 36],
       ['321 day', 60 * 60 * 24 * 321],
     ]
 
@@ -67,6 +68,34 @@ describe('itty-time', () => {
       for (const [duration, expected] of tests) {
         it(`getTTL('${duration}') => ${expected}`, () => {
           expect(getTTL(duration)).toEqual(expected)
+        })
+      }
+    })
+  })
+
+  describe('getDatePlus(duration: string): Date', () => {
+    type DatePlusTest = [duration: string]
+
+    const tests: DatePlusTest[] = [
+      ['5 seconds'],
+      ['1 minutes'],
+      ['24 hour'],
+      ['1 day, 4 hours, and 36 minutes'],
+      ['2 months'],
+      ['4 years'],
+      ['321 day'],
+    ]
+
+    describe('returns a Date object from the future', () => {
+      for (const [duration] of tests) {
+        const future = getDatePlus(duration)
+
+        it(`getDatePlus('${duration}') => ${future.toISOString()}`, () => {
+
+          const ttl = getTTL(duration)
+          const diff = (+future - +new Date()) / 1000|0 - ttl
+
+          expect(diff).toBeLessThan(2)
         })
       }
     })

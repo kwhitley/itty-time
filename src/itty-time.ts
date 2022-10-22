@@ -57,14 +57,3 @@ export const divide = (duration: string) => ({
     return diff / getTTL(divisor)
   }
 })
-
-// export const getSeconds = d => divide(d).by('seconds')
-
-// // convenience methods
-// // export const getSeconds = divideBy('seconds')
-// export const getMinutes = divideBy('minutes')
-// export const getHours = divideBy('hours')
-// export const getDays = divideBy('days')
-// export const getWeeks = divideBy('weeks')
-// export const getMonths = divideBy('months')
-// export const getYears = divideBy('years')
