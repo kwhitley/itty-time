@@ -1,16 +1,16 @@
 {
   "name": "itty-time",
-  "version": "0.1.0",
-  "description": "An itty library to handle common time-related things for your API.",
+  "version": "0.1.1",
+  "description": "A tiny library to handle common time-related things for your API in a beautiful way.",
   "sourceType": "module",
-  "main": "./itty-time.js",
-  "module": "./itty-time.mjs",
-  "types": "./itty-time.d.ts",
+  "main": "./dist/itty-time.js",
+  "module": "./dist/itty-time.mjs",
+  "types": "./dist/itty-time.d.ts",
   "exports": {
     ".": {
-      "require": "./itty-time.js",
-      "import": "./itty-time.mjs",
-      "types": "./itty-time.d.ts"
+      "require": "./dist/itty-time.js",
+      "import": "./dist/itty-time.mjs",
+      "types": "./dist/itty-time.d.ts"
     }
   },
   "scripts": {
@@ -27,14 +27,14 @@
     "prebuild": "rimraf dist && mkdir dist",
     "build": "tsup src/itty-time.ts --format cjs,esm --minify --dts --clean",
     "prepublishOnly": "yarn build",
-    "release": "release --tag --push --src=dist --patch"
+    "release": "release --tag --push --patch"
   },
   "keywords": [
-    "fetch",
-    "api",
-    "helper",
-    "tiny",
-    "json"
+    "ttl",
+    "dates",
+    "math",
+    "string",
+    "divide"
   ],
   "repository": {
     "type": "git",

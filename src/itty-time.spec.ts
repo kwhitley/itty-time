@@ -110,7 +110,7 @@ describe('itty-time', () => {
     ]
 
     const tests: DivisionTest[] = [
-      ['1 week', 'day', 7],
+      ['1 week', 'days', 7],
       ['2 minutes', 'second', 120],
       ['3 days', 'hour', 24 * 3],
       ['1 day', '3 hours', 8],
