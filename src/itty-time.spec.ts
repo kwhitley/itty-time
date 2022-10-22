@@ -1,12 +1,9 @@
 import { describe, expect, it } from 'vitest'
 import {
-  getDatePlus,
+  divide, getDatePlus,
   getDuration,
-  getTTL,
-  divideBy,
-  divide,
+  getTTL
 } from './itty-time'
-import * as time from './itty-time'
 
 describe('itty-time', () => {
   describe('exports', () => {
@@ -45,8 +42,6 @@ describe('itty-time', () => {
     describe('parses', () => {
       for (const [duration, expected] of tests) {
         it(`getDuration('${duration}') => ${JSON.stringify(expected).replace(/([:,])/g, '$1 ')}`, () => {
-          const { value, unit } = getDuration(duration)
-
           expect(getDuration(duration)).toEqual(expected)
         })
       }
@@ -101,7 +96,19 @@ describe('itty-time', () => {
     })
   })
 
-  describe('divideBy(seconds: number) => (duration: string): number', () => {
+  describe('divide(duration1: string).by(duration2: string): number', () => {
+    it('divide(duration: string) returns an object with a single property, "by", in it', () => {
+      const response = divide('1 day')
+
+      expect(typeof response).toBe('object')
+    })
+
+    it('divide(duration: string).by is a function', () => {
+      const response = divide('1 day')
+
+      expect(typeof response.by).toBe('function')
+    })
+
     type DivisionTest = [
       duration: string,
       divisor: string,

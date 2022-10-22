@@ -35,21 +35,7 @@ export const getTTL = (duration: string) => {
 }
 
 // HELPER FUNCTION: creates convenience methods below
-export const divideBy = (divisor: string) => {
-  const seconds = getTTL(divisor)
-
-  return (duration: string) => {
-    const now = +(new Date()) / 1000|0
-    const next = +(getDatePlus(duration)) / 1000|0
-    const diff = next - now
-
-    return diff / seconds
-  }
-}
-
-// HELPER FUNCTION: creates convenience methods below
-export const divide = (duration: string) => ({
-  by: (divisor: string) => {
+export const divide = (duration: string) => ({ by: (divisor: string) => {
     const now = +(new Date()) / 1000|0
     const next = +(getDatePlus(duration)) / 1000|0
     const diff = next - now
