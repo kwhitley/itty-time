@@ -15,14 +15,14 @@ Tiny (~530 bytes) time math library for making date handling and TTLs within you
 
 ## Features
 
-- Tiny @ ~530 bytes gzipped
+- Tiny @ ~530 bytes gzipped total, and tree-shakeable even further.
 - Fully typed/TypeScript support
 - Use plain text strings to describe time, not seconds/milliseconds
 - Get TTLs
 - Get future dates
 - Divide durations
 
-## Simple Usage
+## Example
 
 ```js
 import { getTTL, divide, getDatePlus } from 'itty-time' // under 600 bytes
@@ -50,7 +50,7 @@ divide('3 days').by('hours') // 72
 divide('1 day, 30 minutes').by('hours') // 24.5
 ```
 
-## DISCLAIMER: This is a CONVENIENCE library for making short, readable code.
+#### DISCLAIMER: This is a CONVENIENCE library for making short, readable code.
 
 If you need absolute max performance for iterative work in a single thread, do the operations manually. That's always faster.
 

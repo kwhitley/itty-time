@@ -1,6 +1,6 @@
 {
   "name": "itty-time",
-  "version": "0.1.4",
+  "version": "0.1.5",
   "description": "A tiny library to handle common time-related things for your API in a beautiful way.",
   "sourceType": "module",
   "main": "./dist/itty-time.js",
