@@ -11,11 +11,11 @@
 [![GitHub Repo stars](https://img.shields.io/github/stars/kwhitley/itty-time?style=social)](https://github.com/kwhitley/itty-time)
 [![Twitter](https://img.shields.io/twitter/follow/kevinrwhitley.svg?style=social&label=Follow)](https://www.twitter.com/kevinrwhitley)
 
-Tiny (~530 bytes) time math library for making date handling and TTLs within your APIs beautiful.
+Tiny (~500 bytes) time math library for making date handling and TTLs within your APIs beautiful.
 
 ## Features
 
-- Tiny @ ~530 bytes gzipped total, and tree-shakeable even further.
+- Tiny @ ~500 bytes gzipped total, and tree-shakeable even further.
 - Fully typed/TypeScript support
 - Use plain text strings to describe time, not seconds/milliseconds
 - Get TTLs
