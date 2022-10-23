@@ -25,22 +25,38 @@ Tiny (~530 bytes) time math library for making date handling and TTLs within you
 ### WARNING - pre-release
 This API, *specifically around the naming of exposed functions* may likely change in the next few days.  In the meantime, use/play at your own risk.  API changes will be broadcasted here and [on Discord](https://discord.com/channels/832353585802903572/1033783747809648680).
 
+### CHANGELOG - pre-release
+- **v0.1.x** to **v0.2.x** - renamed: `getTTL`-->`getSeconds`, `getDatePlus`-->`datePlus`, added optional "from" param to `datePlus`.
+  ```ts
+  // old
+  getTTL('1 hour')
+  // new
+  getSeconds('1 hour')
+
+  // old
+  getDatePlus('1 hour')
+  // new
+  datePlus('1 hour')
+
+  // added functionality
+  datePlus('1 hour', optionalDate?: Date)
+  ```
 ## Example
 
 ```js
-import { getTTL, divide, getDatePlus } from 'itty-time' // under 600 bytes
+import { getSeconds, divide, datePlus } from 'itty-time' // under 600 bytes
 
 // Easily get TTL in seconds
-getTTL('3 hours') // 10800
+getSeconds('3 hours') // 10800
 
 // Complicated bits?  No problem.  (Oxford comma optional)
-getTTL('1 day, 4 hours, and 36 minutes') // 102960
+getSeconds('1 day, 4 hours, and 36 minutes') // 102960
 
 // Need an expiration date?
-getDatePlus('5 seconds') // 2022-10-22T23:10:11.824Z
-getDatePlus('1 minutes') // 2022-10-22T23:11:06.824Z
-getDatePlus('2 months') // 2022-12-23T00:11:58.534Z
-getDatePlus('4 years') // 2026-10-22T23:11:58.534Z
+datePlus('5 seconds') // 2022-10-22T23:10:11.824Z
+datePlus('1 minutes') // 2022-10-22T23:11:06.824Z
+datePlus('2 months') // 2022-12-23T00:11:58.534Z
+datePlus('4 years') // 2026-10-22T23:11:58.534Z
 
 // Want to find out how many X are in Y?
 divide('1 week').by('days') // 7
@@ -61,26 +77,30 @@ Otherwise, you'll probably never feel the difference, but your code sure will! <
 
 # API
 
-### `getTTL(duration: string): number`
-
+### `getSeconds(duration: string): number`
 Returns the number of seconds (as you typically need within a TTL) in the duration string.
 ```ts
-getTTL('3 hours') // 10800
-getTTL('1 day, 4 hours, and 36 minutes') // 102960
+getSeconds('3 hours') // 10800
+getSeconds('1 day, 4 hours, and 36 minutes') // 102960
 ```
 
-### `getDatePlus(duration: string): Date`
+---
 
-Returns a Date object, from Date.now(), with the duration added.  So a date from the future.
+### `datePlus(duration: string, from?: Date): Date`
+Adds a duration to a date (default is Date.now()), returning the future date.
 ```ts
-getDatePlus('5 seconds') // 2022-10-22T23:10:11.824Z
-getDatePlus('1 minutes') // 2022-10-22T23:11:06.824Z
-getDatePlus('2 months') // 2022-12-23T00:11:58.534Z
-getDatePlus('4 years') // 2026-10-22T23:11:58.534Z
+datePlus('5 seconds') // 2022-10-22T23:10:11.824Z
+datePlus('1 minutes') // 2022-10-22T23:11:06.824Z
+datePlus('2 months') // 2022-12-23T00:11:58.534Z
+datePlus('4 years') // 2026-10-22T23:11:58.534Z
+
+// or from another date
+datePlus('1 minutes', datePlus('1 year')) // 2023-10-22T23:11:06.824Z
 ```
+
+---
 
 ### `divide(duration1: string).by(duration2: string): number`
-
 Divides one duration by another, in a nice, readable manner.
 ```ts
 divide('1 week').by('days') // 7

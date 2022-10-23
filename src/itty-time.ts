@@ -8,9 +8,9 @@ export const getDuration = (duration: string) => {
 }
 
 // FUNCTION: get future date from a duration string (e.g. getDatePlus('3 hours'))
-export const getDatePlus = (duration: string) => {
+export const datePlus = (duration: string, from?: Date) => {
   const durations = duration.split(/,?\s*and\s*|,\s*/)
-  let next = new Date()
+  let next = from || new Date()
 
   for (const d of durations) {
     const { value, unit } = getDuration(d)
@@ -26,20 +26,15 @@ export const getDatePlus = (duration: string) => {
   return next
 }
 
-// FUNCTION: get number of seconds from a duration string
-export const getTTL = (duration: string) => {
-  const now = +(new Date)
-  const next = +(getDatePlus(duration))
-
-  return (next - now) / 1000|0
-}
-
 // HELPER FUNCTION: creates convenience methods below
 export const divide = (duration: string) => ({ by: (divisor: string) => {
-    const now = +(new Date()) / 1000|0
-    const next = +(getDatePlus(duration)) / 1000|0
-    const diff = next - now
+    const now = +new Date()
+    const diff = +datePlus(duration) - now
+    const diffBy = +datePlus(divisor) - now
 
-    return diff / getTTL(divisor)
+    return diff / diffBy
   }
 })
+
+// FUNCTION: get number of seconds from a duration string
+export const getSeconds = (duration: string) => divide(duration).by('seconds')

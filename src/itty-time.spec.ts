@@ -1,8 +1,9 @@
 import { describe, expect, it } from 'vitest'
 import {
-  divide, getDatePlus,
+  datePlus,
+  divide,
   getDuration,
-  getTTL
+  getSeconds,
 } from './itty-time'
 
 describe('itty-time', () => {
@@ -11,12 +12,12 @@ describe('itty-time', () => {
       expect(typeof getDuration).toBe('function')
     })
 
-    it('getTTL', () => {
-      expect(typeof getTTL).toBe('function')
+    it('getSeconds', () => {
+      expect(typeof getSeconds).toBe('function')
     })
 
-    it('getDatePlus', () => {
-      expect(typeof getDatePlus).toBe('function')
+    it('datePlus', () => {
+      expect(typeof datePlus).toBe('function')
     })
   })
 
@@ -48,10 +49,10 @@ describe('itty-time', () => {
     })
   })
 
-  describe('getTTL(duration: string): number', () => {
-    type TTLTest = [duration: string, expected: number]
+  describe('getSeconds(duration: string): number', () => {
+    type SecondsTest = [duration: string, expected: number]
 
-    const tests: TTLTest[] = [
+    const tests: SecondsTest[] = [
       ['5 seconds', 5],
       ['1 minutes', 60],
       ['24 hour', 60 * 60 * 24],
@@ -61,14 +62,14 @@ describe('itty-time', () => {
 
     describe('returns number of seconds', () => {
       for (const [duration, expected] of tests) {
-        it(`getTTL('${duration}') => ${expected}`, () => {
-          expect(getTTL(duration)).toEqual(expected)
+        it(`getSeconds('${duration}') => ${expected}`, () => {
+          expect(getSeconds(duration)).toEqual(expected)
         })
       }
     })
   })
 
-  describe('getDatePlus(duration: string): Date', () => {
+  describe('datePlus(duration: string, from?: Date): Date', () => {
     type DatePlusTest = [duration: string]
 
     const tests: DatePlusTest[] = [
@@ -83,12 +84,27 @@ describe('itty-time', () => {
 
     describe('returns a Date object from the future', () => {
       for (const [duration] of tests) {
-        const future = getDatePlus(duration)
+        const future = datePlus(duration)
 
-        it(`getDatePlus('${duration}') => ${future.toISOString()}`, () => {
+        it(`datePlus('${duration}') => ${future.toISOString()}`, () => {
 
-          const ttl = getTTL(duration)
-          const diff = (+future - +new Date()) / 1000|0 - ttl
+          const Seconds = getSeconds(duration)
+          const diff = (+future - +new Date()) / 1000|0 - Seconds
+
+          expect(diff).toBeLessThan(2)
+        })
+      }
+    })
+
+    describe('can take an optional second Date paramater', () => {
+      for (const [duration] of tests) {
+        const oneYearFromNow = datePlus('1 year')
+        const future = datePlus(duration, oneYearFromNow)
+
+        it(`datePlus('${duration}', datePlus('1 year')) => ${future.toISOString()}`, () => {
+
+          const Seconds = getSeconds(duration)
+          const diff = (+future - +oneYearFromNow) / 1000|0 - Seconds
 
           expect(diff).toBeLessThan(2)
         })
