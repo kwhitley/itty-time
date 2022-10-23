@@ -1,5 +1,28 @@
+export type LengthOfTime = 'second' | 'seconds'
+  | 'minute' | 'minutes'
+  | 'hour' | 'hours'
+  | 'day' | 'days'
+  | 'week' | 'weeks'
+  | 'month' | 'months'
+  | 'year' | 'years';
+
+type DurationSegment = `${number} ${LengthOfTime}` | `and ${number} ${LengthOfTime}`;
+
+
+type CommaDuration<T extends string> = T extends DurationSegment
+  ? T
+  : T extends `${DurationSegment}, ${infer R}` ? T extends `${infer F}, ${R}`
+    ? `${F}, ${Duration<R>}` : never : DurationSegment;
+
+type OxfordDuration<T extends string> = T extends DurationSegment
+  ? T
+  : T extends `${DurationSegment} and ${infer R}` ? T extends `${infer F} and ${R}`
+    ? `${F} and ${Duration<R>}` : never : DurationSegment;
+
+export type Duration<T extends string> = CommaDuration<T> | OxfordDuration<T>;
+
 // FUNCTION: get { value, unit } from a duration string
-export const getDuration = (duration: string) => {
+export const getDuration = <T extends string>(duration: Duration<T>) => {
   const match = duration.match(/^(?<strValue>[\d.]+)?\s?(?<unit>\w+?)s?$/)
   const { strValue, unit } = match.groups
   const value = +(strValue === undefined ? 1 : strValue)
@@ -8,7 +31,7 @@ export const getDuration = (duration: string) => {
 }
 
 // FUNCTION: get future date from a duration string (e.g. getDatePlus('3 hours'))
-export const getDatePlus = (duration: string) => {
+export const getDatePlus =  <T extends string>(duration: Duration<T>) => {
   const durations = duration.split(/,?\s*and\s*|,\s*/)
   let next = new Date()
 
@@ -27,7 +50,7 @@ export const getDatePlus = (duration: string) => {
 }
 
 // FUNCTION: get number of seconds from a duration string
-export const getTTL = (duration: string) => {
+export const getTTL =  <T extends string>(duration: Duration<T>) => {
   const now = +(new Date)
   const next = +(getDatePlus(duration))
 
@@ -35,7 +58,7 @@ export const getTTL = (duration: string) => {
 }
 
 // HELPER FUNCTION: creates convenience methods below
-export const divide = (duration: string) => ({ by: (divisor: string) => {
+export const divide = <T extends string>(duration: Duration<T>) => ({ by: <T extends string>(divisor: Duration<T>) => {
     const now = +(new Date()) / 1000|0
     const next = +(getDatePlus(duration)) / 1000|0
     const diff = next - now
