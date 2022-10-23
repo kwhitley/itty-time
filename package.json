@@ -1,6 +1,6 @@
 {
   "name": "itty-time",
-  "version": "0.1.7",
+  "version": "0.1.8",
   "description": "Tiny (~530 bytes) time math library for beautiful date handling/TTLs within your APIs.",
   "sourceType": "module",
   "main": "./dist/itty-time.js",
