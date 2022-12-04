@@ -1,6 +1,34 @@
+const basicUnits = {
+  'week': 7 * 24 * 60 * 60,
+  'day': 24 * 60 * 60,
+  'hour': 60 * 60,
+  'minute': 60,
+  'second': 1,
+}
+
+// FUNCTION: get number of seconds from a duration string
+export const getSeconds = (duration: string) => {
+  const durations = duration.split(/,?\s*and\s*|,\s*/)
+  const now = new Date().setMilliseconds(0)
+  let next = now
+
+  for (const d of durations) {
+    const { value, unit } = getDuration(d)
+
+    if (basicUnits[unit]) {
+      next += basicUnits[unit] * value * 1000
+    } else {
+      const from = new Date(next)
+      next = +new Date(from.setMonth(from.getMonth() + value * (unit === 'year' ? 12 : 1)))
+    }
+  }
+
+  return (next - now) / 1000
+}
+
 // FUNCTION: get { value, unit } from a duration string
 export const getDuration = (duration: string) => {
-  const match = duration.match(/^(?<strValue>[\d.]+)?\s?(?<unit>\w+?)s?$/)
+  const match = duration.toLowerCase().match(/^(?<strValue>[\d.]+)?\s?(?<unit>\w+?)s?$/)
   const { strValue, unit } = match.groups
   const value = +(strValue === undefined ? 1 : strValue)
 
@@ -8,33 +36,19 @@ export const getDuration = (duration: string) => {
 }
 
 // FUNCTION: get future date from a duration string (e.g. getDatePlus('3 hours'))
-export const datePlus = (duration: string, from?: Date) => {
-  const durations = duration.split(/,?\s*and\s*|,\s*/)
-  let next = from || new Date()
+export const datePlus = (duration: string, from?: Date): Date => {
+  const next = new Date(from || null)
 
-  for (const d of durations) {
-    const { value, unit } = getDuration(d)
-    const conversions = { 'Days': 'Date', 'Weeks': 'Date', 'Years': 'Month', 'Months': 'Month' }
-    const multipliers = { 'Weeks': 7, 'Years': 12 }
-    let capUnit = unit.charAt(0).toUpperCase() + unit.slice(1) + 's'
-    const multiple = multipliers[capUnit] || 1
-    capUnit = conversions[capUnit] || capUnit
-    const [get, set] = [`get${capUnit}`, `set${capUnit}`]
-    next = new Date(next[set](next[get]() + value * multiple))
-  }
-
-  return next
+  return new Date(next.setSeconds(next.getSeconds() + getSeconds(duration)))
 }
 
 // HELPER FUNCTION: creates convenience methods below
-export const divide = (duration: string) => ({ by: (divisor: string) => {
-    const now = +new Date()
-    const diff = +datePlus(duration) - now
-    const diffBy = +datePlus(divisor) - now
+export const divide = (duration: string) =>
+  ({
+      by: (divisor: string) => {
+                                  const diff = getSeconds(duration)
+                                  const diffBy = getSeconds(divisor)
 
-    return diff / diffBy
-  }
-})
-
-// FUNCTION: get number of seconds from a duration string
-export const getSeconds = (duration: string) => divide(duration).by('seconds')
+                                  return diff / diffBy
+                                }
+  })

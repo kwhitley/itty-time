@@ -33,6 +33,12 @@ describe('itty-time', () => {
       ['1.5 minutes', { value: 1.5, unit: 'minute' }],
     ]
 
+    it('is case insensitive', () => {
+      const { value, unit} = getDuration('5 MinUte')
+
+      expect(unit).toBe('minute')
+    })
+
     it('returns value in { value: number, unit: string } format, such as { value: 12, unit: "minute" }', () => {
       const { value, unit} = getDuration('5 minutes')
 
@@ -158,6 +164,7 @@ describe('itty-time', () => {
           const value = divide(duration).by(divisor)
 
           if (fuzzy) {
+            console.log('fuzzy comparing', value, 'to', expected)
             const proximity = Math.min(value, expected) / Math.max(value, expected)
             const closeEnough = proximity > 0.95
             expect(closeEnough).toBe(true)
