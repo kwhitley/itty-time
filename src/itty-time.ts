@@ -37,7 +37,7 @@ export const getDuration = (duration: string) => {
 
 // FUNCTION: get future date from a duration string (e.g. getDatePlus('3 hours'))
 export const datePlus = (duration: string, from?: Date): Date => {
-  const next = new Date(from || null)
+  const next = from ? new Date(from) : new Date()
 
   return new Date(next.setSeconds(next.getSeconds() + getSeconds(duration)))
 }
