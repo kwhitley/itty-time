@@ -2,6 +2,7 @@ import { describe, expect, it } from 'vitest'
 import {
   datePlus,
   divide,
+  durationToString,
   getDuration,
   getSeconds,
 } from './itty-time'
@@ -34,7 +35,7 @@ describe('itty-time', () => {
     ]
 
     it('is case insensitive', () => {
-      const { value, unit} = getDuration('5 MinUte')
+      const { unit } = getDuration('5 MinUte')
 
       expect(unit).toBe('minute')
     })
@@ -62,6 +63,7 @@ describe('itty-time', () => {
       ['5 seconds', 5],
       ['1 minutes', 60],
       ['24 hour', 60 * 60 * 24],
+      ['2 years', 2 * 365 * 24 * 60 * 60],
       ['1 day, 4 hours, and 36 minutes', 60 * 60 * 24 + 60 * 60 * 4 + 60 * 36],
       ['321 day', 60 * 60 * 24 * 321],
     ]
@@ -171,6 +173,22 @@ describe('itty-time', () => {
           } else {
             expect(value).toBe(expected)
           }
+        })
+      }
+    })
+  })
+
+  describe('durationToString(ms: number, parts?: number)', () => {
+    describe('reverse-parses ms (number) into a readable string', () => {
+      const tests = [
+        { original: '1 week, 3 days, 30 minutes' },
+        { original: '1 month, 4 minutes, 20 seconds', parts: 2, expected: '1 month, 4 minutes' },
+        { original: '1 hour and 30 minutes', parts: 2, expected: '1 hour, 30 minutes' },
+      ]
+
+      for (const { original, parts, expected = original } of tests) {
+        it(original, () => {
+          expect(durationToString(getSeconds(original) * 1000, { parts })).toBe(expected)
         })
       }
     })

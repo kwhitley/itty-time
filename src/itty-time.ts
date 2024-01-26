@@ -1,4 +1,6 @@
-const basicUnits = {
+const units = {
+  'year': 365 * 24 * 60 * 60,
+  'month': 30 * 24 * 60 * 60,
   'week': 7 * 24 * 60 * 60,
   'day': 24 * 60 * 60,
   'hour': 60 * 60,
@@ -15,8 +17,8 @@ export const getSeconds = (duration: string) => {
   for (const d of durations) {
     const { value, unit } = getDuration(d)
 
-    if (basicUnits[unit]) {
-      next += basicUnits[unit] * value * 1000
+    if (units[unit]) {
+      next += units[unit] * value * 1000
     } else {
       const from = new Date(next)
       next = +new Date(from.setMonth(from.getMonth() + value * (unit === 'year' ? 12 : 1)))
@@ -25,6 +27,9 @@ export const getSeconds = (duration: string) => {
 
   return (next - now) / 1000
 }
+
+// FUNCTION: get number of ms from a duration string
+export const getMs = (duration: string) => getSeconds(duration) * 1000
 
 // FUNCTION: get { value, unit } from a duration string
 export const getDuration = (duration: string) => {
@@ -52,3 +57,26 @@ export const divide = (duration: string) =>
                                   return diff / diffBy
                                 }
   })
+
+type DurationToStringOptions = {
+  parts?: number
+}
+
+export const durationToString = (ms: number, options: DurationToStringOptions = {}) => {
+  const {
+    parts = -1,
+
+  } = options
+  const result = []
+  ms = ms / 1000
+
+  for (const [unit, value] of Object.entries(units)) {
+    if (ms < value) continue
+    const count = Math.floor(ms / value)
+    ms -= count * value
+    result.push(`${count} ${unit}${count > 1 ? 's' : ''}`)
+    if (parts > 0 && result.length === parts) break
+  }
+
+  return result.join(', ')
+}
