@@ -1,5 +1,8 @@
 ## Changelog
 
+#### v1.0.7
+- adds: type checking for duration string in ms/seconds/datePlus
+- removes: sourcemap from dist files to shrink package
 #### v1.0.6
 - fix: duration was incorrectly rounding to seconds, instead of only when part limiting
 - fix: duration incorrectly handled sub-second durations (returned empty string)
