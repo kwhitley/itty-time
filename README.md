@@ -20,10 +20,10 @@ Ultra-small (~390 bytes) library for TTL date math and converting ms durations t
 
 ## Features
 
-- Tiny. The entire library is ~390 bytes, and fully tree-shakeable.
 - Convert string durations to ms/seconds.
 - Convert ms to human-readable string durations.
 - Add durations to dates.
+- Tiny. The entire library is ~390 bytes, and tree-shakeable to be even smaller.
 
 ## Comparison to other top-rated libraries
 | library | string to ms | ms to string | date math | size<sup>1</sup>
@@ -46,43 +46,51 @@ Moral of the story, probably don't use [ms](https://www.npmjs.com/package/ms).
 
 Use Luke's if you want the absolute fastest parsing, or itty if you want some of the other functions as well.  If you're byte-counting, itty wins again, but if you're byte-counting that hard, you're probably better off with raw ms math if you can stomach it.
 
-
 ---
 
-## seconds/ms
-<h4>
-  <code>seconds(duration: string) => number</code><br />
-  <code>ms(duration: string) => number</code><br />
-</h4>
-
-TTL math is a maintenance nightmare. It's a pain to write, a pain to read, and when you update the math later, you'll probably forget to update the comment, causing all sorts of mayhem.
+# What does it do?
+TTL math is a maintenance nightmare. It's a pain to write, a pain to read, and when you update the math later, you'll probably forget to update the comment, causing all sorts of mayhem.  Instead of maintaining math in your code like this:
 
 ```ts
-const TTL = 2 * 7 * 24 * 60 * 60 * 1000 // 2 weeks, right?
+const TTL = 2 * 7 * 24 * 60 * 60 * 1000 // 2 weeks... I think?
 ```
 
-Here's a better way.
+Use a simple converter so you can use plain english time descriptions like this:
 
+```
+const TTL = seconds('2 weeks')
+```
+
+That's it!
+
+## Differences between itty-time and ms (the library)
+Aside from the smaller size and faster speed, do note that itty-time's `ms` and `seconds` functions require writing out the actual unit name like `"3 hours"`, rather than supporting abbreviations like `"3h"` or `"3hrs"`.  We do this for two reasons:
+
+1. This improves readability.  We like this.
+1. Supporting fewer variations keeps itty-time smaller.
+
+# API
+
+### `ms(duration: TimeString) => number` &nbsp; ![bundle size](https://deno.bundlejs.com/?q=itty-time/ms&badge&badge-style=flat-square)
+Converts string durations to **milliseconds** (great for time math).
 ```ts
-import { ms, seconds } from 'itty-time'
-
-// to seconds
-seconds('2 weeks') // 1209600
+import { ms } from 'itty-time' // ~190 bytes
 
 // to milliseconds
 ms('2 weeks') // 1209600000
 ```
 
-## duration
-<h4>
-  <code>duration(ms: number) => string</code>
-</h4>
+### `seconds(duration: TimeString) => number` &nbsp; ![bundle size](https://deno.bundlejs.com/?q=itty-time/seconds&badge&badge-style=flat-square)
+Convert string durations to **seconds** (great for expiry systems that use seconds, like Cloudflare KV).
+```ts
+import { seconds } from 'itty-time' ~200 bytes
 
-Of course, we sometimes need to go the other direction.  Want to tell a user how long ago something happened?  How much time they have left?
+// to seconds
+seconds('2 weeks') // 1209600
+```
 
-You could build it yourself, or import the fantastic [humanize-duration](https://www.npmjs.com/package/humanize-duration) library that inspired this, but at 6.3kB<sup>1</sup>, it's over 20x the size of this 280 byte function.
-
-<sup>1: of course [humanize-duration](https://www.npmjs.com/package/humanize-duration) can also do much, much more.</sup>
+### `duration(ms: number) => string | Array<TimeParts>` &nbsp; ![bundle size](https://deno.bundlejs.com/?q=itty-time/duration&badge&badge-style=flat-square)
+Converts a duration number to a string.
 
 ```ts
 import { duration } from 'itty-time'
@@ -109,19 +117,14 @@ duration(3750000, { join: false })
 /*
 ```
 
-## datePlus
-<h4>
-  <code>datePlus(duration: string, from = new Date) => Date</code>
-</h4>
-
-Sometimes you need a TTL for some point in the future, but sometimes you need the actual date.  You could convert it all yourself... or use this.
-
+### `datePlus(duration: TimeString, from = new Date) => Date` &nbsp; ![bundle size](https://deno.bundlejs.com/?q=itty-time/datePlus&badge&badge-style=flat-square)
+Need to add/subtract time from a date?  Find the date two weeks from now?  Set an alarm for 30 minutes before your birthday?  Use this.
 ```js
 import { datePlus } from 'itty-time'
 
 // from right now
-datePlus('2 months')
+datePlus('2 weeks')
 
 // or from a different date
-datePlus('2 months', datePlus('1 week'))
+datePlus('-30 minutes', new Date('2024/11/1'))
 ```
