@@ -1,6 +1,6 @@
 {
   "name": "itty-time",
-  "version": "1.0.6",
+  "version": "2.0.0",
   "description": "Ultra-small (~390 bytes) library for TTL date math and converting ms durations to and from strings.",
   "main": "./index.js",
   "module": "./index.mjs",
