@@ -11,6 +11,11 @@
       "require": "./index.js",
       "types": "./index.d.ts"
     },
+    "./colored-terminal": {
+      "import": "./colored-terminal.mjs",
+      "require": "./colored-terminal.js",
+      "types": "./colored-terminal.d.ts"
+    },
     "./datePlus": {
       "import": "./datePlus.mjs",
       "require": "./datePlus.js",

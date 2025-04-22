@@ -43,16 +43,16 @@ export default async () => {
       {
         format: 'esm',
         file: file.esm,
-        sourcemap: true,
+        sourcemap: false,
       },
       {
         format: 'cjs',
         file: file.cjs,
-        sourcemap: true,
+        sourcemap: false,
       },
     ],
     plugins: [
-      typescript({ sourceMap: true }),
+      typescript({ sourceMap: false }),
       terser(),
       bundleSize(),
       copy({
