@@ -1,35 +1,35 @@
 {
   "name": "itty-time",
-  "version": "2.0.1",
+  "version": "2.0.2",
   "description": "Smaller and faster than ms.",
   "main": "./index.js",
   "module": "./index.mjs",
   "types": "./index.d.ts",
   "exports": {
     ".": {
-      "import": "./dist/index.mjs",
-      "types": "./dist/index.d.ts",
-      "require": "./dist/index.cjs"
+      "import": "./index.mjs",
+      "types": "./index.d.ts",
+      "require": "./index.cjs"
     },
     "./datePlus": {
-      "import": "./dist/datePlus.mjs",
-      "types": "./dist/datePlus.d.ts",
-      "require": "./dist/datePlus.cjs"
+      "import": "./datePlus.mjs",
+      "types": "./datePlus.d.ts",
+      "require": "./datePlus.cjs"
     },
     "./duration": {
-      "import": "./dist/duration.mjs",
-      "types": "./dist/duration.d.ts",
-      "require": "./dist/duration.cjs"
+      "import": "./duration.mjs",
+      "types": "./duration.d.ts",
+      "require": "./duration.cjs"
     },
     "./ms": {
-      "import": "./dist/ms.mjs",
-      "types": "./dist/ms.d.ts",
-      "require": "./dist/ms.cjs"
+      "import": "./ms.mjs",
+      "types": "./ms.d.ts",
+      "require": "./ms.cjs"
     },
     "./seconds": {
-      "import": "./dist/seconds.mjs",
-      "types": "./dist/seconds.d.ts",
-      "require": "./dist/seconds.cjs"
+      "import": "./seconds.mjs",
+      "types": "./seconds.d.ts",
+      "require": "./seconds.cjs"
     }
   },
   "scripts": {
