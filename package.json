@@ -1,48 +1,44 @@
 {
   "name": "itty-time",
   "version": "2.0.1",
-  "description": "Ultra-small (~390 bytes) library for TTL date math and converting ms durations to and from strings.",
+  "description": "Smaller and faster than ms.",
   "main": "./index.js",
   "module": "./index.mjs",
   "types": "./index.d.ts",
   "exports": {
     ".": {
-      "import": "./index.mjs",
-      "require": "./index.js",
-      "types": "./index.d.ts"
+      "import": "./dist/index.mjs",
+      "types": "./dist/index.d.ts",
+      "require": "./dist/index.cjs"
     },
     "./datePlus": {
-      "import": "./datePlus.mjs",
-      "require": "./datePlus.js",
-      "types": "./datePlus.d.ts"
+      "import": "./dist/datePlus.mjs",
+      "types": "./dist/datePlus.d.ts",
+      "require": "./dist/datePlus.cjs"
     },
     "./duration": {
-      "import": "./duration.mjs",
-      "require": "./duration.js",
-      "types": "./duration.d.ts"
+      "import": "./dist/duration.mjs",
+      "types": "./dist/duration.d.ts",
+      "require": "./dist/duration.cjs"
     },
     "./ms": {
-      "import": "./ms.mjs",
-      "require": "./ms.js",
-      "types": "./ms.d.ts"
+      "import": "./dist/ms.mjs",
+      "types": "./dist/ms.d.ts",
+      "require": "./dist/ms.cjs"
     },
     "./seconds": {
-      "import": "./seconds.mjs",
-      "require": "./seconds.js",
-      "types": "./seconds.d.ts"
+      "import": "./dist/seconds.mjs",
+      "types": "./dist/seconds.d.ts",
+      "require": "./dist/seconds.cjs"
     }
   },
   "scripts": {
-    "dev": "vitest --coverage --reporter verbose",
-    "lint": "yarn run eslint src",
-    "test": "vitest run --coverage",
-    "verify": "echo 'verifying module...' && yarn build && yarn test",
-    "prerelease": "yarn verify",
-    "prerelease:next": "yarn verify",
-    "prebuild": "rimraf dist && mkdir dist",
-    "build": "rollup -c",
-    "release": "release --tag --push --patch --src=dist",
-    "release:next": "release --tag --push --type=next --src=dist"
+    "dev": "bun test --watch --coverage",
+    "test": "bun test --coverage",
+    "lint": "itty lint",
+    "build": "itty lint && itty build --hybrid",
+    "release": "itty release --prepare --tag --push",
+    "release:next": "itty release --prepare --tag --push --type=next"
   },
   "keywords": [
     "humanize",
@@ -65,23 +61,7 @@
     "url": "https://github.com/kwhitley/itty-time/issues"
   },
   "devDependencies": {
-    "@rollup/plugin-multi-entry": "^6.0.1",
-    "@rollup/plugin-terser": "^0.4.4",
-    "@rollup/plugin-typescript": "^11.1.6",
-    "@typescript-eslint/eslint-plugin": "^7.7.0",
-    "@typescript-eslint/parser": "^7.7.0",
-    "@vitest/coverage-v8": "^1.5.0",
-    "coveralls": "^3.1.1",
-    "eslint": "^8.57.0",
-    "fs-extra": "^11.2.0",
-    "globby": "^14.0.1",
-    "jsdom": "^24.0.0",
-    "rimraf": "^5.0.5",
-    "rollup": "^4.14.3",
-    "rollup-plugin-bundle-size": "^1.0.3",
-    "rollup-plugin-copy": "^3.5.0",
-    "typescript": "^5.4.5",
-    "vitest": "^1.5.0",
-    "yarn-release": "^1.10.6"
+    "@types/bun": "^1.2.17",
+    "itty-packager": "^1.6.7"
   }
 }

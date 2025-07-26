@@ -1,4 +1,4 @@
-import { describe, expect, it } from 'vitest'
+import { describe, expect, it } from 'bun:test'
 import { ms } from './ms'
 
 describe('ms(duration: string): number', () => {
