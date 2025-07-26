@@ -6,17 +6,20 @@
 </a>
 </p>
 
+[![GitHub](https://img.shields.io/badge/GitHub-%23555.svg?style=flat-square&logo=github&logoColor=#fff)](https://github.com/kwhitley/itty-time)
 [![Version](https://img.shields.io/npm/v/itty-time.svg?style=flat-square)](https://npmjs.com/package/itty-time)
 [![Bundle Size](https://deno.bundlejs.com/?q=itty-time&badge&badge-style=flat-square)](https://deno.bundlejs.com/?q=itty-time)
-[![Coverage Status](https://img.shields.io/coveralls/github/kwhitley/itty-time?style=flat-square)](https://coveralls.io/github/kwhitley/itty-time)
-[![Issues](https://img.shields.io/github/issues/kwhitley/itty-time?style=flat-square)](https://coveralls.io/github/kwhitley/itty-time)
-[![Discord](https://img.shields.io/discord/832353585802903572?label=Discord&logo=Discord&style=flat-square&logoColor=fff)](https://discord.gg/53vyrZAu9u)
+[![Build Status](https://img.shields.io/github/actions/workflow/status/kwhitley/itty-time/verify.yml?branch=v2.x&style=flat-square)](https://github.com/kwhitley/itty-time/actions/workflows/verify.yml)
+[![Coverage Status](https://img.shields.io/coveralls/github/kwhitley/itty-time/v2.x?style=flat-square)](https://coveralls.io/github/kwhitley/itty-time?branch=v2.x)
+[![Issues](https://img.shields.io/github/issues/kwhitley/itty-time?style=flat-square)](https://github.com/kwhitley/itty-time/issues)
+[![Discord](https://img.shields.io/discord/832353585802903572?label=Discord&logo=Discord&style=flat-square&logoColor=fff)](https://discord.gg/WQnqAsjhd6)
 
 ###  [v1 Documentation](https://itty.dev/itty-time) &nbsp;| &nbsp; [Discord](https://discord.gg/53vyrZAu9u)
 
 ---
 
-Ultra-small (~390 bytes) library for TTL date math and converting ms durations to and from strings.
+# Smaller and faster than ms.
+What more do you need to know?
 
 ## Features
 

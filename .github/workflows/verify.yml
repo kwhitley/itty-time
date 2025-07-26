@@ -1,10 +1,10 @@
-name: build
+name: verify
 
 on:
   push:
-    branches: [v0.x]
+    branches: [v2.x]
   pull_request:
-    branches: [v0.x]
+    branches: [v2.x]
 
 jobs:
   build:
@@ -12,10 +12,8 @@ jobs:
 
     steps:
       - uses: actions/checkout@v2
-      - name: Use Node.js
-        uses: actions/setup-node@v1
-        with:
-          node-version: '18.x'
+      - uses: oven-sh/setup-bun@v2.0.1
       - name: Install dependencies
-        run: yarn
-      - run: yarn verify
+        run: bun install
+      - name: Build
+        run: bun run build
