@@ -35,6 +35,7 @@
   "scripts": {
     "dev": "bun test --watch --coverage",
     "test": "bun test --coverage",
+    "test:types": "tsc -p tsconfig.spec.json",
     "lint": "itty lint",
     "build": "itty lint && itty build --hybrid",
     "release": "itty release --prepare --tag --push",

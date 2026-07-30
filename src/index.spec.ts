@@ -1,7 +1,7 @@
 import { describe, expect, it } from 'bun:test'
 import * as exports from './index'
 
-const expected = [
+const expected: (keyof typeof exports)[] = [
   'seconds',
   'ms',
   'duration',

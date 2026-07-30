@@ -1,13 +1,13 @@
 import { describe, expect, it } from 'bun:test'
 import { duration } from './duration'
-import { ms } from './ms'
+import { ms, type TimeString } from './ms'
 
 const BASE = '1.1 weeks'
 const EXPECTED = '1 week, 16 hours, 48 minutes'
 
 describe('duration(ms: number, options?: durationOptions)', () => {
   describe('reverse-parses ms (number) into a readable string', () => {
-    const tests = [
+    const tests: { original: TimeString, parts?: number, expected?: string }[] = [
       { original: BASE, expected: '1 week, 16 hours, 48 minutes' },
       { original: BASE, parts: 2, expected: '1 week, 16.8 hours' },
       { original: BASE, parts: 1, expected: '1.1 weeks' },
