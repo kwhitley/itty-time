@@ -1,9 +1,9 @@
 import { describe, expect, it } from 'bun:test'
 import { datePlus } from './datePlus'
-import { ms } from './ms'
+import { ms, type TimeString } from './ms'
 
 describe('datePlus(duration: string, from?: Date): Date', () => {
-  type DatePlusTest = [duration: string]
+  type DatePlusTest = [duration: TimeString]
 
   const tests: DatePlusTest[] = [
     ['5 seconds'],

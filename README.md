@@ -54,8 +54,8 @@ Use Luke's if you want the absolute fastest parsing, or itty if you want some of
 
 ## seconds/ms
 <h4>
-  <code>seconds(duration: string) => number</code><br />
-  <code>ms(duration: string) => number</code><br />
+  <code>seconds(duration: TimeString | number) => number</code><br />
+  <code>ms(duration: TimeString | number) => number</code><br />
 </h4>
 
 TTL math is a maintenance nightmare. It's a pain to write, a pain to read, and when you update the math later, you'll probably forget to update the comment, causing all sorts of mayhem.
@@ -74,6 +74,14 @@ seconds('2 weeks') // 1209600
 
 // to milliseconds
 ms('2 weeks') // 1209600000
+```
+
+Duration strings are typed as `TimeString`, so typos like `ms('2 weekz')` fail at compile time rather than silently misbehaving.  If you're parsing arbitrary user input (that you've validated yourself), cast it:
+
+```ts
+import { ms, type TimeString } from 'itty-time'
+
+ms(userInput as TimeString)
 ```
 
 ## duration
@@ -114,7 +122,7 @@ duration(3750000, { join: false })
 
 ## datePlus
 <h4>
-  <code>datePlus(duration: string, from = new Date) => Date</code>
+  <code>datePlus(duration: TimeString | number, from = new Date) => Date</code>
 </h4>
 
 Sometimes you need a TTL for some point in the future, but sometimes you need the actual date.  You could convert it all yourself... or use this.

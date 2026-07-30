@@ -1,8 +1,9 @@
 import { describe, expect, it } from 'bun:test'
 import { seconds } from './seconds'
+import { type TimeString } from './lib/units'
 
 describe('seconds(duration: string): number', () => {
-  type SecondsTest = [duration: string | number, expected: number]
+  type SecondsTest = [duration: TimeString | number, expected: number]
 
   const tests: SecondsTest[] = [
     ['5 seconds', 5],
