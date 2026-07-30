@@ -1,8 +1,8 @@
 import { describe, expect, it } from 'bun:test'
-import { ms } from './ms'
+import { ms, type TimeString } from './ms'
 
 describe('ms(duration: string): number', () => {
-  type MsTest = [duration: string | number, expected: number]
+  type MsTest = [duration: TimeString | number, expected: number]
 
   const tests: MsTest[] = [
     ['1 minutes', 60 * 1000],
@@ -10,11 +10,12 @@ describe('ms(duration: string): number', () => {
     ['2 years', 2 * 365.25 * 24 * 60 * 60 * 1000],
     ['321 day', 60 * 60 * 24 * 321 * 1000],
     ['30.5 seconds', 30.5 * 1000],
-    ['30.5   seconds', 30.5 * 1000],
+    ['30.5   seconds' as TimeString, 30.5 * 1000], // extra whitespace still parses at runtime
     [4001, 4001], // a number is assumed to be a number
     ['100', 100], // string of a number is assumed to be ms
     ['100 ms', 100], // can handle ms
-    ['100apple', NaN], // can handle ms
+    ['100 milliseconds', 100], // can handle milliseconds
+    ['100apple' as TimeString, NaN], // unparsable strings return NaN at runtime
   ]
 
   describe('returns number of Ms', () => {
@@ -35,7 +36,7 @@ describe('ms(duration: string): number', () => {
       { type: 'date', value: date, returns: +date },
       { type: 'false', value: false, returns: 0 },
       { type: '0 (string)', value: '0', returns: 0 },
-      { type: '0', value: '0', returns: 0 },
+      { type: '0', value: 0, returns: 0 },
       { type: 'unparsable string', value: '456apple', returns: NaN },
       { type: 'object', value: {}, throws: true },
       { type: 'function', value: () => {}, throws: true },

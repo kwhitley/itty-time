@@ -1,5 +1,8 @@
 ## Changelog
 
+#### v2.1.0
+- added: TimeString/TimeUnit types - duration strings passed to ms/seconds/datePlus are now type-checked
+- BREAKING (types only): TS code passing plain strings (e.g. user input) must cast via `as TimeString` - runtime behavior is unchanged
 #### v2.0.0
 - BREAKING: to allow 0, false, and '0' as valid arguments for ms, tests had to be changed.
 - removed: sourcemaps in dist version (additional size savings)

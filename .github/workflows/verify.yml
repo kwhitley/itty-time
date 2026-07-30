@@ -17,3 +17,5 @@ jobs:
         run: bun install
       - name: Build
         run: bun run build
+      - name: Test types
+        run: bun run test:types
