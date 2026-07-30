@@ -36,7 +36,7 @@ describe('ms(duration: string): number', () => {
       { type: 'date', value: date, returns: +date },
       { type: 'false', value: false, returns: 0 },
       { type: '0 (string)', value: '0', returns: 0 },
-      { type: '0', value: '0', returns: 0 },
+      { type: '0', value: 0, returns: 0 },
       { type: 'unparsable string', value: '456apple', returns: NaN },
       { type: 'object', value: {}, throws: true },
       { type: 'function', value: () => {}, throws: true },

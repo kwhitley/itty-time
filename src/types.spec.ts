@@ -8,24 +8,24 @@ import { type TimeString } from './lib/units'
 // since bun test does not type-check.
 describe('TimeString type checking', () => {
   it('accepts every format the type allows', () => {
-    const durations: TimeString[] = [
-      '100',
-      '100 ms',
-      '100 millisecond',
-      '100 milliseconds',
-      '30.5 seconds',
-      '-30 minutes',
-      '1.5 hours',
-      '1 day',
-      '2 weeks',
-      '3 months',
-      '4 years',
+    const durations: [duration: TimeString, expected: number][] = [
+      ['100', 100],
+      ['100 ms', 100],
+      ['100 millisecond', 100],
+      ['100 milliseconds', 100],
+      ['30.5 seconds', 30.5 * 1000],
+      ['-30 minutes', -30 * 60 * 1000],
+      ['1.5 hours', 1.5 * 60 * 60 * 1000],
+      ['1 day', 24 * 60 * 60 * 1000],
+      ['2 weeks', 2 * 7 * 24 * 60 * 60 * 1000],
+      ['3 months', 3 * 30 * 24 * 60 * 60 * 1000],
+      ['4 years', 4 * 365.25 * 24 * 60 * 60 * 1000],
     ]
 
-    for (const duration of durations) {
-      expect(ms(duration)).not.toBeNaN()
-      expect(seconds(duration)).not.toBeNaN()
-      expect(+datePlus(duration)).not.toBeNaN()
+    for (const [duration, expected] of durations) {
+      expect(ms(duration)).toBe(expected)
+      expect(seconds(duration)).toBe(expected / 1000)
+      expect(+datePlus(duration, new Date(0))).toBe(expected)
     }
   })
 
